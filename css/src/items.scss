@@ -1,0 +1,12 @@
+.items {
+	width: calc(100% - 30px);
+	border: 2px solid #333;
+	height: 68px;
+	background-color: rgba(255, 0, 60, 0.2);
+	margin: 10px auto;
+}
+.items p {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 25px;
+}
