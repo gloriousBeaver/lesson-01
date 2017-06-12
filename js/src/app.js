@@ -1,10 +1,48 @@
 ( function() {
 
+// We want to be able to initialize the widget to determine the initial state
+	function TwoColumns(name) {
+		this.name = name;
+
+		function getItemPosition(item) {
+			return item.position;
+		}
+	}
+
+	var twoColumnsObject = new TwoColumns({
+		itemA: {
+			text: "Item A",
+			position: "left"
+		},
+		itemB: {
+			text: "Item B",
+			position: "left"
+		},
+		itemC: {
+			text: "Item C",
+			position: "left"
+		},
+		itemD: {
+			text: "Item C",
+			position: "right"
+		},
+	});
 
 	init();
 
 	function init() {
+		console.log(TwoColumns.getItemPosition('itemA'))
+		if ( twoColumnsObject ) {
+			console.log(twoColumnsObject )	
+			for ( var i=0; i<twoColumnsObject.length; i++ ) {
+				console.log(twoColumnsObject[i])
+			}
+		}
 
+	// Upon mutating the internal state of the widget we want to be able to retrieve the position of
+	// any item:
+	// twoColumnsObject.getItemPosition("itemA")
+	// returns "right" or "left"
 	}
 
 	$('.items').on('click', function(e) {
