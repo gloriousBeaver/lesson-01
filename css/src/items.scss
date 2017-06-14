@@ -79,14 +79,19 @@
 
 .move_upwards_to_pos_3 {
 	position: relative;
-	animation: move_upwards_to_pos_3 1s ease-in 1 forwards;
+	animation: move_upwards_to_pos_3_an 1s ease-in 1 forwards;
 }
 
-@keyframes move_upwards_to_pos_3 {
+@keyframes move_upwards_to_pos_3_an {
 	from {
 		top: 1000px;
 	}
 	to {
 		top: 80px;
 	}
+}
+
+.translateUp80 {
+	transform: translateY(-80px);
+	transition: transform 1s ease-in-out 1s; 
 }

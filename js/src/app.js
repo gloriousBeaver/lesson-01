@@ -39,19 +39,19 @@
 		// 	}
 		// }
 
-		$('#innerWrapper-left .columns').append('<div class="items"><p>Item A</p></div>');
-		$('#innerWrapper-left .columns').append('<div class="items"><p>Item B</p></div>');
-		$('#innerWrapper-left .columns').append('<div class="items"><p>Item C</p></div>');
-		$('#innerWrapper-left .columns').append('<div class="items"><p>Item D</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items"><p>Item A</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items"><p>Item B</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items"><p>Item C</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items"><p>Item D</p></div>');		
+		$('#innerWrapper-left .columns').append('<div class="items" id="item-left-0"><p>Item A</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="item-left-1"><p>Item B</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="item-left-2"><p>Item C</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="item-left-3"><p>Item D</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="item-right-0"><p>Item A</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="item-right-1"><p>Item B</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="item-right-2"><p>Item C</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="item-right-3"><p>Item D</p></div>');		
 
 		$('#innerWrapper-left .columns .items:nth-child(1)').addClass('active pos_0');
 		$('#innerWrapper-left .columns .items:nth-child(2)').addClass('active pos_1');
 		$('#innerWrapper-left .columns .items:nth-child(3)').addClass('active pos_2');
-		$('#innerWrapper-right .columns .items:nth-child(1)').addClass('active pos_0');
+		$('#innerWrapper-right .columns .items:nth-child(4)').addClass('active pos_0');
 
 	// Upon mutating the internal state of the widget we want to be able to retrieve the position of
 	// any item:
@@ -82,29 +82,46 @@
 		// $('#innerWrapper-left .columns .items.selected').addClass('falling');
 
 		var numOfSelectedItems = $('#innerWrapper-left .columns .items.selected').length;
+
 		$('#innerWrapper-left .columns .items.selected').each( function(index) {
-			console.log( $(this) , 'delay: ', (numOfSelectedItems - index) );
+			// console.log( $(this) , 'delay: ', (numOfSelectedItems - index) );
 			$(this).css({
 				'transition-delay' : (numOfSelectedItems - index -1)*500+'ms'
 			});
 			$(this).addClass('falling');
 			$(this).removeClass('active');
 
+			//get which item is selected and target this item to be moved up
 
-			$('#innerWrapper-right .columns .items:nth-child(2)').css({
+			// ind is index of moved element
+			var _ind = $(this).index();
+			console.log('this item: ', $(this).index() );
+			// we need to move target item on right element with _ind index
+
+			var _pos = $('#innerWrapper-right .columns .items.active').length;
+			console.log("num of items on right: ", $('#innerWrapper-right .columns .items.active').length );
+
+			$('#innerWrapper-right .columns .items:nth-child('+(_ind+1)+')').css({
 				'animation-delay' : (numOfSelectedItems + index-1)*500+'ms'
 			});
-			$('#innerWrapper-right .columns .items:nth-child(2)').addClass('move_upwards_to_pos_1');
 
-			$('#innerWrapper-right .columns .items:nth-child(3)').css({
-				'animation-delay' : (numOfSelectedItems + index)*500+'ms'
-			});
-			$('#innerWrapper-right .columns .items:nth-child(3)').addClass('move_upwards_to_pos_2');
+			// position is wrong
+			$('#innerWrapper-right .columns .items:nth-child('+(_ind+1)+')').addClass('active move_upwards_to_pos_'+(_pos+0));
 
-			$('#innerWrapper-right .columns .items:nth-child(4)').css({
-				'animation-delay' : (numOfSelectedItems + index + 1)*500+'ms'
-			});
-			$('#innerWrapper-right .columns .items:nth-child(4)').addClass('move_upwards_to_pos_3');
+			// $('#innerWrapper-right .columns .items:nth-child(2)').css({
+			// 	'animation-delay' : (numOfSelectedItems + index-1)*500+'ms'
+			// });
+			// $('#innerWrapper-right .columns .items:nth-child(2)').addClass('move_upwards_to_pos_1');
+
+			// $('#innerWrapper-right .columns .items:nth-child(3)').css({
+			// 	'animation-delay' : (numOfSelectedItems + index)*500+'ms'
+			// });
+			// $('#innerWrapper-right .columns .items:nth-child(3)').addClass('move_upwards_to_pos_2');
+
+			// $('#innerWrapper-right .columns .items:nth-child(4)').css({
+			// 	'animation-delay' : (numOfSelectedItems + index + 1)*500+'ms'
+			// });
+			// $('#innerWrapper-right .columns .items:nth-child(4)').addClass('move_upwards_to_pos_3');
 		});
 
 		repositionLeftColumn();
@@ -116,11 +133,9 @@
 
 	function repositionLeftColumn() {
 		$('#innerWrapper-left .columns .items.active').each( function(index) {
-			console.log('we got an active item. index: ', index, $(this));
+			// console.log('we got an active item. index: ', index, $(this));
 			$(this).removeClass('pos_0 pos_1 pos_2 pos_3');
 			$(this).addClass('pos_'+index);
-
-
 		});
 	}
 
