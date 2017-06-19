@@ -8,6 +8,10 @@
 		this.itemC = obj.itemC;
 		this.itemD = obj.itemD;
 
+		TwoColumns.prototype.getItemText = function(item) {
+			return obj[''+item].text;
+		}
+
 		TwoColumns.prototype.setItemPosition = function(item, position) {
 			obj[''+item].position = position;
 		}
@@ -86,19 +90,19 @@
 				position: "left"
 			},
 			itemD: {
-				text: "Item C",
+				text: "Item D",
 				position: "right"
 			},
 		});
 
-		$('#innerWrapper-left .columns').append('<div class="items" id="itemA"><p>Item A</p></div>');
-		$('#innerWrapper-left .columns').append('<div class="items" id="itemB"><p>Item B</p></div>');
-		$('#innerWrapper-left .columns').append('<div class="items" id="itemC"><p>Item C</p></div>');
-		$('#innerWrapper-left .columns').append('<div class="items" id="itemD"><p>Item D</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items" id="itemA-right"><p>Item A</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items" id="itemB-right"><p>Item B</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items" id="itemC-right"><p>Item C</p></div>');
-		$('#innerWrapper-right .columns').append('<div class="items" id="itemD-right"><p>Item D</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="itemA"><p>'+TwoColumns.prototype.getItemText('itemA')+'</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="itemB"><p>'+TwoColumns.prototype.getItemText('itemB')+'</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="itemC"><p>'+TwoColumns.prototype.getItemText('itemC')+'</p></div>');
+		$('#innerWrapper-left .columns').append('<div class="items" id="itemD"><p>'+TwoColumns.prototype.getItemText('itemD')+'</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="itemA-right"><p>'+TwoColumns.prototype.getItemText('itemA')+'</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="itemB-right"><p>'+TwoColumns.prototype.getItemText('itemB')+'</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="itemC-right"><p>'+TwoColumns.prototype.getItemText('itemC')+'</p></div>');
+		$('#innerWrapper-right .columns').append('<div class="items" id="itemD-right"><p>'+TwoColumns.prototype.getItemText('itemD')+'</p></div>');
 
 		setActiveItems();
 
