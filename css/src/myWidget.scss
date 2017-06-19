@@ -4,6 +4,7 @@ html, css {
 }
 .wrapper {
 	background-color: #fff;
+	background-image: url('https://placekitten.com/900/600');
 	width: 900px;
 	height: 600px;
 	position: absolute;
@@ -33,14 +34,14 @@ html, css {
 }
 
 #innerWrapper-left {
-	background: linear-gradient(180deg, gold, darkolivegreen);
+	// background: linear-gradient(180deg, gold, darkolivegreen);
 	height: 100%;
 	width: 300px;
 	padding: 30px;
 
 }
 #innerWrapper-right {
-	background-color: rgba(255, 200, 0, 1);
+	// background: linear-gradient(180deg, gold, green);
 	height: 100%;
 	width: 300px;
 	padding: 30px;
@@ -52,6 +53,7 @@ html, css {
     top: 20px;
 	left: 50%;
 	transform: translateX(-50%);
+	background-color: rgba(127, 127, 127, 0.8);
 	// border: 2px solid rebeccapurple;
 	padding-top: 10px;
 	// display: flex;
