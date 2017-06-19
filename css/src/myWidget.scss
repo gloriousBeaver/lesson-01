@@ -29,7 +29,7 @@ html, css {
 	left: 17px;
 	width: 100%;
 	height: 100%;
-	opacity: 0.3;
+	opacity: 0.15;
 }
 
 #innerWrapper-left {
@@ -48,11 +48,11 @@ html, css {
 .columns {
 	position: relative;
     width: 280px;
-    height: 310px;
+    height: 300px;
     top: 20px;
 	left: 50%;
 	transform: translateX(-50%);
-	border: 2px solid rebeccapurple;
+	// border: 2px solid rebeccapurple;
 	padding-top: 10px;
 	// display: flex;
 	// flex-direction: column;
@@ -73,7 +73,6 @@ $transitionLasting: 0.2s;
 	border-radius: 20px;
 	background-color: #fff;
 	cursor: pointer;
-	
 	transition: all $transitionLasting linear; 
 }
 .buttons::after {
@@ -94,4 +93,9 @@ $transitionLasting: 0.2s;
 	color: #fff;
 	border: 2px solid #000;
 	transition: background-color $transitionLasting*2 linear, color $transitionLasting*2 linear, border $transitionLasting*2 linear;
+}
+.buttons.disabled {
+	pointer-events: none;
+	border: 2px solid #f00;
+	color: #f00;
 }
