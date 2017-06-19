@@ -1,4 +1,4 @@
-$timeMultiplier: 1.0s;
+$timeMultiplier: 0.75s;
 
 .items {
 	position: absolute;
@@ -6,7 +6,7 @@ $timeMultiplier: 1.0s;
 	width: calc(100% - 30px);
 	border: 2px solid #333;
 	height: 68px;
-	background-color: rgba(255, 0, 60, 0.2);
+	background-color: #fff;
 	// margin: 0px auto;
 }
 .items p {

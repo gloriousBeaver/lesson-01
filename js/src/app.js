@@ -71,45 +71,77 @@
 	$('.items').on('click', function(e) {
 		// temporary
 		if( temporary ) {
-			$(this).toggleClass('selected')
+			if( !$('.buttons').hasClass('disabled') ) {
+				$(this).toggleClass('selected')
+			}
 		}
 		else {
-			if( e.ctrlKey ) {
-				$(this).toggleClass('selected')
+			if( !$('.buttons').hasClass('disabled') ) {
+				if( e.ctrlKey ) {
+					$(this).toggleClass('selected')
+				}
 			}	
-		}
+		} 
 	})
 
 	//temporary
 	$(document).keypress(function(e) {
+		console.log(e)
 	    if(e.which == 13) {
-	    	if( !$('.buttons.button-left').hasClass('disabled') ) {
-	        	$('.buttons.button-left').trigger('click');
-	        }
-	    }
-	    if(e.which == 97) {
+	    	// if( !$('.buttons').hasClass('disabled') ) {
+	     //    	$('.buttons').trigger('click');
+	     //    }
+	    }	    	    
+	    else if(e.which == 97) {
 	        $('#innerWrapper-left .columns .items:nth-child(1)').trigger('click');
 	    }
-	    if(e.which == 98) {
+	    else if(e.which == 98) {
 	        $('#innerWrapper-left .columns .items:nth-child(2)').trigger('click');
 	    }
-	    if(e.which == 99) {
+	    else if(e.which == 99) {
 	        $('#innerWrapper-left .columns .items:nth-child(3)').trigger('click');
 	    }
-   	    if(e.which == 100) {
+   	    else if(e.which == 100) {
 	        $('#innerWrapper-left .columns .items:nth-child(4)').trigger('click');
-	    } 	    	    	    
+	    } 	 
+	    else {}   	    	    
 	});
+
+	$(document).keydown(function(e) {
+	    switch(e.which) {
+	        case 37: // left
+    	    	if( !$('.buttons').hasClass('disabled') ) {
+	        		$('.buttons.button-right').trigger('click');
+	      	  }
+	        break;
+
+	        case 38: // up
+	        break;
+
+	        case 39: // right
+    	    	if( !$('.buttons').hasClass('disabled') ) {
+	        		$('.buttons.button-left').trigger('click');
+	      	  }
+	        break;
+
+	        case 40: // down
+	        break;
+
+	        default: return; // exit this handler for other keys
+	    }
+	    e.preventDefault(); // prevent the default action (scroll / move caret)
+	});	
 
 
 	$('.buttons.button-left').on('click', function(e) {
 		console.log(' clicked on left button')
 		//select items on left column with selected class
-		// $('#innerWrapper-left .columns .items.selected').addClass('falling');
-		
 		var numOfSelectedItems = $('#innerWrapper-left .columns .items.selected').length;
-		
-		$('.buttons.button-left').addClass('disabled');	
+		// console.log('numOfSelectedItems: ', numOfSelectedItems);
+		if( numOfSelectedItems == 0 ) {
+			return;
+		}
+		$('.buttons').addClass('disabled');	
 		
 		$('#innerWrapper-left .columns .items.selected').each( function(index) {
 			// console.log( $(this) , 'delay: ', (numOfSelectedItems - index) );
@@ -123,65 +155,115 @@
 
 			// ind is index of moved element
 			var _ind = $(this).index();
-			console.log('this item: ', $(this).index() );
+			// console.log('this item: ', $(this).index() );
 			// we need to move target item on right element with _ind index
 
 			var _pos = $('#innerWrapper-right .columns .items.active').length;
-			console.log("num of items on right: ", $('#innerWrapper-right .columns .items.active').length );
-
-
+			// console.log("num of items on right: ", $('#innerWrapper-right .columns .items.active').length );
 
 			$('#innerWrapper-right .columns .items:nth-child('+(_ind+1)+')').css({
 				// 'animation-delay' : (numOfSelectedItems + index-1)*500+'ms'
 			});
-
-			// position is wrong
-			console.log('moving to position: nth-child(', (_ind+1), ' pos: ', (_pos));
+			// console.log('moving to position: nth-child(', (_ind+1), ' pos: ', (_pos));
 			$('#innerWrapper-right .columns .items:nth-child('+(_ind+1)+')').addClass('active move_upwards_to_pos_'+(_pos));
-			// $('#innerWrapper-right .columns .items:nth-child('+(_ind+1)+')').removeClass('pos_0 pos_1 pos_2 pos_3');
-
-			// $('#innerWrapper-right .columns .items:nth-child(2)').css({
-			// 	'animation-delay' : (numOfSelectedItems + index-1)*500+'ms'
-			// });
-			// $('#innerWrapper-right .columns .items:nth-child(2)').addClass('move_upwards_to_pos_1');
-
-			// $('#innerWrapper-right .columns .items:nth-child(3)').css({
-			// 	'animation-delay' : (numOfSelectedItems + index)*500+'ms'
-			// });
-			// $('#innerWrapper-right .columns .items:nth-child(3)').addClass('move_upwards_to_pos_2');
-
-			// $('#innerWrapper-right .columns .items:nth-child(4)').css({
-			// 	'animation-delay' : (numOfSelectedItems + index + 1)*500+'ms'
-			// });
-			// $('#innerWrapper-right .columns .items:nth-child(4)').addClass('move_upwards_to_pos_3');
 		});
 
 		repositionLeftColumn();
-		
-		//move them to the right column
-		//remove them from left column
-		//remove class selected 
 	});
 
 	function repositionLeftColumn() {
+		console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		console.log("Active items on left: ", $('#innerWrapper-left .columns .items.active'))
+		// $('#innerWrapper-left .columns .items.active').each( function(index) {
+		// 	console.log('we got an active item. index: ', index, $(this), 'adding class: pos_'+index);
+		// 	$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+		// 	$(this).addClass('pos_'+index);
+		// });
+
+
+		var posCount = 0;
 		$('#innerWrapper-left .columns .items.active').each( function(index) {
-			// console.log('we got an active item. index: ', index, $(this));
-			$(this).removeClass('pos_0 pos_1 pos_2 pos_3');
-			$(this).addClass('pos_'+index);
+			if( $(this).hasClass('pos_0')) {
+				console.log(' has class pos_0')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else if( $(this).hasClass('pos_1')) {
+				console.log(' has class ppos_1')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else if( $(this).hasClass('pos_2')) {
+				console.log(' has class ppos_2')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else if( $(this).hasClass('pos_3')) {
+				console.log(' has class ppos_3')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else {
+				console.log('unexpected value');
+			}									
 		});
 	}
 
 	$('.items').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
-	    // your event handler
-	    console.log(' removing')
-	    $('.items.falling').hide();
-	    $('.items.falling').removeClass('falling active selected pos_0 pos_1 pos_2 pos_3');
-	    console.log('enabling buttons')
+	    // experimental
+	    $('.items.falling').removeClass('falling active selected pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+	    // console.log('enabling buttons')
 	    $('.buttons').removeClass('disabled');
 	    		
 	});
 
 	$('.buttons.button-right').on('click', function(e) {
+		//select items on left column with selected class
+		var numOfSelectedItems = $('#innerWrapper-right .columns .items.selected').length;
+		if( numOfSelectedItems == 0 ) {
+			return;
+		}
+		$('.buttons').addClass('disabled');	
+		
+		$('#innerWrapper-right .columns .items.selected').each( function(index) {
+			// console.log( $(this) , 'delay: ', (numOfSelectedItems - index) );
+			$(this).css({
+				'transition-delay' : (numOfSelectedItems - index -1)*500+'ms'
+			});
+
+			$(this).addClass('falling');
+			$(this).removeClass('active');
+
+			//get which item is selected and target this item to be moved up
+
+			// ind is index of moved element
+			var _ind = $(this).index();
+			// we need to move target item on right element with _ind index
+
+			var _pos = $('#innerWrapper-left .columns .items.active').length;
+			// console.log("num of items on left: ", $('#innerWrapper-left .columns .items.active').length );
+
+			$('#innerWrapper-left .columns .items:nth-child('+(_ind+1)+')').css({
+				// 'animation-delay' : (numOfSelectedItems + index-1)*500+'ms'
+			});
+			// console.log('moving to position: nth-child(', (_ind+1), ' pos: ', (_pos));
+			$('#innerWrapper-left .columns .items:nth-child('+(_ind+1)+')').addClass('active move_upwards_to_pos_'+(_pos));
+		});
+
+		repositionRightColumn();	
 
 	});
+
+	function repositionRightColumn() {
+		$('#innerWrapper-right .columns .items.active').each( function(index) {
+			// console.log('we got an active item. index: ', index, $(this));
+			$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+			$(this).addClass('pos_'+index);
+		});
+	}
+
 })();
