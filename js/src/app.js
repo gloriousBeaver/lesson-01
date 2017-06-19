@@ -174,43 +174,65 @@
 	function repositionLeftColumn() {
 		console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		console.log("Active items on left: ", $('#innerWrapper-left .columns .items.active'))
+
 		// $('#innerWrapper-left .columns .items.active').each( function(index) {
 		// 	console.log('we got an active item. index: ', index, $(this), 'adding class: pos_'+index);
 		// 	$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
 		// 	$(this).addClass('pos_'+index);
 		// });
-
-
 		var posCount = 0;
-		$('#innerWrapper-left .columns .items.active').each( function(index) {
-			if( $(this).hasClass('pos_0')) {
-				console.log(' has class pos_0')
-				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
-				$(this).addClass('pos_'+posCount);
-				posCount++;
-			}
-			else if( $(this).hasClass('pos_1')) {
-				console.log(' has class ppos_1')
-				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
-				$(this).addClass('pos_'+posCount);
-				posCount++;
-			}
-			else if( $(this).hasClass('pos_2')) {
-				console.log(' has class ppos_2')
-				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
-				$(this).addClass('pos_'+posCount);
-				posCount++;
-			}
-			else if( $(this).hasClass('pos_3')) {
-				console.log(' has class ppos_3')
-				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
-				$(this).addClass('pos_'+posCount);
-				posCount++;
-			}
-			else {
-				console.log('unexpected value');
-			}									
-		});
+
+		if( $('#innerWrapper-left .columns .items.active').hasClass('pos_0') ) {
+			// remains unchanged;
+			// $('#innerWrapper-left .columns .items.active.pos_0').removeClass('pos_0').addClass('pos_'+posCount);
+			posCount++;
+		}
+		if( $('#innerWrapper-left .columns .items.active').hasClass('pos_1') ) {
+			$('#innerWrapper-left .columns .items.active.pos_1').removeClass('pos_1').addClass('pos_'+posCount);
+			posCount++;
+		}
+		if( $('#innerWrapper-left .columns .items.active').hasClass('pos_2') ) {
+			$('#innerWrapper-left .columns .items.active.pos_2').removeClass('pos_2').addClass('pos_'+posCount);
+			posCount++;
+		}
+		if( $('#innerWrapper-left .columns .items.active').hasClass('pos_3') ) {
+			$('#innerWrapper-left .columns .items.active.pos_3').removeClass('pos_3').addClass('pos_'+posCount);
+			posCount++;
+		}		
+
+
+
+		// $('#innerWrapper-left .columns .items.active').each( function(index) {
+		// 	console.log('item on left: ', $(this));
+		// 	if( $(this).hasClass('pos_0')) {
+		// 		console.log(' has class pos_0')
+		// 		$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+		// 		$(this).addClass('pos_'+posCount);
+		// 		posCount++;
+		// 	}
+		// 	else if( $(this).hasClass('pos_1')) {
+		// 		console.log(' has class ppos_1')
+		// 		$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+		// 		$(this).addClass('pos_'+posCount);
+		// 		posCount++;
+		// 	}
+		// 	else if( $(this).hasClass('pos_2')) {
+		// 		console.log(' has class ppos_2')
+		// 		$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+		// 		$(this).addClass('pos_'+posCount);
+		// 		posCount++;
+		// 	}
+		// 	else if( $(this).hasClass('pos_3')) {
+		// 		console.log(' has class ppos_3')
+		// 		$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+		// 		$(this).addClass('pos_'+posCount);
+		// 		posCount++;
+		// 	}
+		// 	else {
+		// 		console.log('unexpected value');
+		// 	}									
+		// });
+
 	}
 
 	$('.items').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
@@ -218,6 +240,57 @@
 	    $('.items.falling').removeClass('falling active selected pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
 	    // console.log('enabling buttons')
 	    $('.buttons').removeClass('disabled');
+
+
+		$('#innerWrapper-left .columns .items.active').each( function(index) 
+		{
+		    if( $(this).hasClass('move_upwards_to_pos_0') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+0);
+		    }
+		    else if( $(this).hasClass('move_upwards_to_pos_1') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+1);
+		    }
+		    else if( $(this).hasClass('move_upwards_to_pos_2') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+2);
+		    }
+		    else if( $(this).hasClass('move_upwards_to_pos_3') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+3);
+		    }
+		    else {}
+		});
+
+		$('#innerWrapper-right .columns .items.active').each( function(index) 
+		{
+		    if( $(this).hasClass('move_upwards_to_pos_0') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+0);
+		    }
+		    else if( $(this).hasClass('move_upwards_to_pos_1') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+1);
+		    }
+		    else if( $(this).hasClass('move_upwards_to_pos_2') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+2);
+		    }
+		    else if( $(this).hasClass('move_upwards_to_pos_3') )
+		    {
+				$(this).removeClass('move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+3);
+		    }
+		    else {}
+		});
 	    		
 	});
 
@@ -259,10 +332,40 @@
 	});
 
 	function repositionRightColumn() {
-		$('#innerWrapper-right .columns .items.active').each( function(index) {
-			// console.log('we got an active item. index: ', index, $(this));
-			$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
-			$(this).addClass('pos_'+index);
+		// $('#innerWrapper-right .columns .items.active').each( function(index) {
+		// 	// console.log('we got an active item. index: ', index, $(this));
+		// 	$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+		// 	$(this).addClass('pos_'+index);
+		// });
+		var posCount = 0;
+		$('#innerWrapper-left .columns .items.active').each( function(index) {
+			if( $(this).hasClass('pos_0')) {
+				console.log(' has class pos_0')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else if( $(this).hasClass('pos_1')) {
+				console.log(' has class ppos_1')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else if( $(this).hasClass('pos_2')) {
+				console.log(' has class ppos_2')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else if( $(this).hasClass('pos_3')) {
+				console.log(' has class ppos_3')
+				$(this).removeClass('pos_0 pos_1 pos_2 pos_3 move_upwards_to_pos_0 move_upwards_to_pos_1 move_upwards_to_pos_2 move_upwards_to_pos_3');
+				$(this).addClass('pos_'+posCount);
+				posCount++;
+			}
+			else {
+				console.log('unexpected value');
+			}									
 		});
 	}
 
